@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['user_id'] = $user['user_id'];
         $_SESSION['username'] = $user['username'];
 
-        header('Location: admin.php'); /
+        header('Location: admin.php');
         exit();
     } else {
         $loginError = 'Invalid username or password'; // Display an error message on the login form
@@ -40,12 +40,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html>
 <head>
     <title>Product Management System - Login</title>
-
     <link rel="stylesheet" href="css/bootstrap.min.css"> 
     <script src="js/bootstrap.min.js"></script> 
     <style>
         .container {
-            max-width: 400px;
+            max-width: 50%;
             margin: 0 auto;
             margin-top: 100px;
         }
@@ -53,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
     <div class="container">
-        <h1>Login</h1>
+        <h1 class="text-center mt-5">Login</h1>
         <?php if (isset($loginError)): ?>
             <div class="alert alert-danger"><?php echo $loginError; ?></div>
         <?php endif; ?>
@@ -70,9 +69,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <button type="submit" class="btn btn-primary">Login</button>
             </div>
             <div class="form-group text-center">
-                <a href="signup.php" class="btn btn-link">Dont have an account? Signup</a>
+                <a href="signup.php" class="btn btn-link">Don't have an account? Signup</a>
             </div>
         </form>
     </div>
+    <footer>
+  <?php include("footer.php");?>
+</footer>
+
 </body>
 </html>
+
