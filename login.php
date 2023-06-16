@@ -48,6 +48,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             max-width: 400px;
             margin: 0 auto;
             margin-top: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Adjust the width of the login text fields */
+        #username, #password {
+            width: 80%;
         }
     </style>
 </head>
@@ -70,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <button type="submit" class="btn btn-primary">Login</button>
             </div>
             <div class="form-group text-center">
-                <a href="signup.php" class="btn btn-link">Dont have an account? Signup</a>
+                <a href="signup.php" class="btn btn-link">Don't have an account? Signup</a>
             </div>
         </form>
     </div>
