@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['user_id'] = $user['user_id'];
         $_SESSION['username'] = $user['username'];
 
-        header('Location: admin.php'); /
+        header('Location: admin.php');
         exit();
     } else {
         $loginError = 'Invalid username or password'; // Display an error message on the login form
@@ -76,3 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 </body>
 </html>
+
+<footer>
+  <?php include("footer.php");?>
+</footer>

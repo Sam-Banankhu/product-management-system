@@ -1,0 +1,37 @@
+/* style.css */
+
+.projects {
+    padding: 20px;
+}
+
+.projects .container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.projects h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.projects .project-list {
+    margin-top: 10px;
+}
+
+.projects .project {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.projects .project .project-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.projects .project .project-description {
+    font-size: 16px;
+    line-height: 1.5;
+}
