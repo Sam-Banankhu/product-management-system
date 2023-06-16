@@ -8,7 +8,7 @@ $isLoggedIn = isLoggedIn();
 // Handle logout action
 if (isset($_GET['logout'])) {
     logout();
-    header('Location: login.php');
+    header('Location: index.php');
     exit();
 }
 ?>

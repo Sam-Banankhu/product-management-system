@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="css/bootstrap.min.css"> -->
     <link rel="stylesheet" href="css/footer.css">
 </head>
 <body>
@@ -9,7 +9,7 @@
         <div class="container">
             <div class="row">
                 <div class="col text-center">
-                    <p>&copy; 2023 LogicLab</p>
+                <p style="color: white;">&copy; <?php echo date("Y"); ?> LogicLab Inc. All rights reserved.</p>
                 </div>
             </div>
         </div>

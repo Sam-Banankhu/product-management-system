@@ -46,7 +46,6 @@
 
             if (isset($_POST['search'])) {
                 // Code for search functionality
-                // ...
             } else {
                 echo "<table id=\"product-table\">";
                 echo "<tr>";

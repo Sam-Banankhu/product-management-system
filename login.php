@@ -73,9 +73,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </form>
     </div>
+    <footer>
+  <?php include("footer.php");?>
+</footer>
+
 </body>
 </html>
 
-<footer>
-  <?php include("footer.php");?>
-</footer>
