@@ -34,7 +34,7 @@ if (isset($_GET['logout'])) {
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <div class="navbar-nav">
                 <a class="nav-link" href="index.php">Dashboard</a>
-                <a class="nav-link" href="#">Contacts</a>
+                <a class="nav-link" href="about.php">About</a>
                 <?php if ($isLoggedIn) { ?>
                     <a class="nav-link admin-link" href="admin.php">Admin</a>
                     <a class="nav-link" href="?logout">Logout</a>

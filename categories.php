@@ -1,9 +1,8 @@
 <?php
 // Include the necessary files for database connection and session management
 include("header.php");
-
-require_once 'db_connection.php'; 
-require_once 'session.php'; 
+require_once 'db_connection.php';
+require_once 'session.php';
 
 // Check if the user is already logged in, redirect to the index if true
 if (!isLoggedIn()) {
@@ -41,19 +40,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_category'])) {
     $stmt->close();
 }
 
-// Retrieve the list of categories from the categories table
-$query = "SELECT * FROM categories";
+// Pagination variables
+$items_per_page = 10;
+$current_page = isset($_GET['page']) ? $_GET['page'] : 1;
+$offset = ($current_page - 1) * $items_per_page;
+
+// Retrieve the total number of categories
+$query = "SELECT COUNT(*) AS total_categories FROM categories";
 $result = $conn->query($query);
+$row = $result->fetch_assoc();
+$total_categories = $row['total_categories'];
+
+// Calculate the total number of pages
+$total_pages = ceil($total_categories / $items_per_page);
+
+// Retrieve the list of categories with pagination
+$query = "SELECT * FROM categories LIMIT ?, ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param('ii', $offset, $items_per_page);
+$stmt->execute();
+$result = $stmt->get_result();
 $categories = $result->fetch_all(MYSQLI_ASSOC);
-$result->free_result();
+$stmt->close();
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
     <title>Product Management System - Categories</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css"> 
-    <script src="js/bootstrap.min.js"></script> 
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/bootstrap.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -77,7 +93,7 @@ $result->free_result();
         <table class="table">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <!-- <th>ID</th> -->
                     <th>Name</th>
                     <th>Actions</th>
                 </tr>
@@ -85,7 +101,7 @@ $result->free_result();
             <tbody>
                 <?php foreach ($categories as $category): ?>
                     <tr>
-                        <td><?php echo $category['category_id']; ?></td>
+                        <!-- <td><?php echo $category['category_id']; ?></td> -->
                         <td><?php echo $category['name']; ?></td>
                         <td>
                             <form method="POST" class="d-inline-block">
@@ -97,6 +113,22 @@ $result->free_result();
                 <?php endforeach; ?>
             </tbody>
         </table>
+
+        <nav aria-label="Categories Pagination">
+            <ul class="pagination">
+                <?php if ($current_page > 1): ?>
+                    <li class="page-item"><a class="page-link" href="categories.php?page=<?php echo $current_page - 1; ?>">Previous</a></li>
+                <?php endif; ?>
+
+                <?php for ($page = 1; $page <= $total_pages; $page++): ?>
+                    <li class="page-item <?php echo ($page == $current_page) ? 'active' : ''; ?>"><a class="page-link" href="categories.php?page=<?php echo $page; ?>"><?php echo $page; ?></a></li>
+                <?php endfor; ?>
+
+                <?php if ($current_page < $total_pages): ?>
+                    <li class="page-item"><a class="page-link" href="categories.php?page=<?php echo $current_page + 1; ?>">Next</a></li>
+                <?php endif; ?>
+            </ul>
+        </nav>
 
         <hr>
 

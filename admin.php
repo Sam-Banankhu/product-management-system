@@ -18,12 +18,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_item'])) {
     $item_price = $_POST['item_price'];
     $item_category = $_POST['item_category'];
 
-    // Insert the new item into the items table
-    $query = "INSERT INTO items (name, description, quantity, price, category_id) VALUES (?, ?, ?, ?, ?)";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param('ssidi', $item_name, $item_description, $item_quantity, $item_price, $item_category);
-    $stmt->execute();
-    $stmt->close();
+    // Server-side validation for price and quantity fields
+    if ($item_quantity < 0 || $item_price < 0) {
+        $error_message = "Quantity and price cannot be negative.";
+    } else {
+        // Insert the new item into the items table
+        $query = "INSERT INTO items (name, description, quantity, price, category_id) VALUES (?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param('ssidi', $item_name, $item_description, $item_quantity, $item_price, $item_category);
+        $stmt->execute();
+        $stmt->close();
+    }
 }
 
 // Handle the item deletion
@@ -38,13 +43,37 @@ if (isset($_GET['delete_item'])) {
     $stmt->close();
 }
 
-// Retrieve the list of items with their corresponding categories
+// Retrieve the total number of items
+$query = "SELECT COUNT(*) AS total_items FROM items";
+$result = $conn->query($query);
+$row = $result->fetch_assoc();
+$total_items = $row['total_items'];
+$result->free_result();
+
+// Define the number of items to display per page
+$items_per_page = 10;
+
+// Calculate the total number of pages
+$total_pages = ceil($total_items / $items_per_page);
+
+// Get the current page number
+$current_page = isset($_GET['page']) ? $_GET['page'] : 1;
+
+// Calculate the starting and ending item indices for the current page
+$start_index = ($current_page - 1) * $items_per_page;
+$end_index = $start_index + $items_per_page - 1;
+
+// Retrieve the list of items with their corresponding categories based on the current page
 $query = "SELECT items.item_id, items.name, items.description, items.quantity, items.price, categories.name AS category_name
           FROM items
-          INNER JOIN categories ON items.category_id = categories.category_id";
-$result = $conn->query($query);
+          INNER JOIN categories ON items.category_id = categories.category_id
+          LIMIT ?, ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param('ii', $start_index, $items_per_page);
+$stmt->execute();
+$result = $stmt->get_result();
 $items = $result->fetch_all(MYSQLI_ASSOC);
-$result->free_result();
+$stmt->close();
 
 // Retrieve the list of categories from the categories table
 $query = "SELECT * FROM categories";
@@ -66,6 +95,9 @@ $result->free_result();
         <h1>Admin Dashboard</h1>
 
         <h2>Add Item</h2>
+        <?php if (isset($error_message)): ?>
+            <div class="alert alert-danger"><?php echo $error_message; ?></div>
+        <?php endif; ?>
         <form method="POST">
             <div class="row">
                 <div class="col-sm-6">
@@ -105,7 +137,7 @@ $result->free_result();
         <table class="table">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <!-- <th>ID</th> -->
                     <th>Name</th>
                     <th>Description</th>
                     <th>Quantity</th>
@@ -117,7 +149,7 @@ $result->free_result();
             <tbody>
                 <?php foreach ($items as $item): ?>
                     <tr>
-                        <td><?php echo $item['item_id']; ?></td>
+                        <!-- <td><?php echo $item['item_id']; ?></td> -->
                         <td><?php echo $item['name']; ?></td>
                         <td><?php echo $item['description']; ?></td>
                         <td><?php echo $item['quantity']; ?></td>
@@ -131,6 +163,22 @@ $result->free_result();
                 <?php endforeach; ?>
             </tbody>
         </table>
+
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <?php if ($current_page > 1): ?>
+                    <li class="page-item"><a class="page-link" href="admin.php?page=<?php echo $current_page - 1; ?>">Previous</a></li>
+                <?php endif; ?>
+
+                <?php for ($page = 1; $page <= $total_pages; $page++): ?>
+                    <li class="page-item <?php if ($page == $current_page) echo 'active'; ?>"><a class="page-link" href="admin.php?page=<?php echo $page; ?>"><?php echo $page; ?></a></li>
+                <?php endfor; ?>
+
+                <?php if ($current_page < $total_pages): ?>
+                    <li class="page-item"><a class="page-link" href="admin.php?page=<?php echo $current_page + 1; ?>">Next</a></li>
+                <?php endif; ?>
+            </ul>
+        </nav>
 
         <hr>
 
