@@ -40,28 +40,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html>
 <head>
     <title>Product Management System - Login</title>
-
     <link rel="stylesheet" href="css/bootstrap.min.css"> 
     <script src="js/bootstrap.min.js"></script> 
     <style>
         .container {
-            max-width: 400px;
+            max-width: 50%;
             margin: 0 auto;
             margin-top: 100px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        /* Adjust the width of the login text fields */
-        #username, #password {
-            width: 80%;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Login</h1>
+        <h1 class="text-center mt-5">Login</h1>
         <?php if (isset($loginError)): ?>
             <div class="alert alert-danger"><?php echo $loginError; ?></div>
         <?php endif; ?>

@@ -1,33 +1,14 @@
 <?php
 // Include the necessary files for database connection and session management
 include("header.php");
+require_once 'db_connection.php';
+require_once 'session.php';
 
-require_once 'db_connection.php'; 
-require_once 'session.php'; 
-
-// Check if the user is already logged in, redirect to the index if true
+// Check if the user is already logged in, redirect to the index if not
 if (!isLoggedIn()) {
-    header('Location: index.php'); // Redirect to index.php if user is not logged in
+    header('Location: index.php');
     exit();
 }
-
-// Handle the category form submission
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_category'])) {
-    $category_name = $_POST['category_name'];
-
-    // Insert the new category into the categories table
-    $query = "INSERT INTO categories (name) VALUES (?)";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param('s', $category_name);
-    $stmt->execute();
-    $stmt->close();
-}
-
-// Retrieve the list of categories from the categories table
-$query = "SELECT * FROM categories";
-$result = $conn->query($query);
-$categories = $result->fetch_all(MYSQLI_ASSOC);
-$result->free_result();
 
 // Handle the item form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_item'])) {
@@ -38,17 +19,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_item'])) {
     $item_category = $_POST['item_category'];
 
     // Insert the new item into the items table
-    $query = "INSERT INTO items (category_id, name, description, quantity, price) VALUES (?, ?, ?, ?, ?)";
+    $query = "INSERT INTO items (name, description, quantity, price, category_id) VALUES (?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param('isssi', $item_category, $item_name, $item_description, $item_quantity, $item_price);
+    $stmt->bind_param('ssidi', $item_name, $item_description, $item_quantity, $item_price, $item_category);
     $stmt->execute();
     $stmt->close();
 }
 
-// Retrieve the list of items from the items table
-$query = "SELECT * FROM items";
+// Handle the item deletion
+if (isset($_GET['delete_item'])) {
+    $item_id = $_GET['delete_item'];
+
+    // Delete the item from the items table
+    $query = "DELETE FROM items WHERE item_id = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param('i', $item_id);
+    $stmt->execute();
+    $stmt->close();
+}
+
+// Retrieve the list of items with their corresponding categories
+$query = "SELECT items.item_id, items.name, items.description, items.quantity, items.price, categories.name AS category_name
+          FROM items
+          INNER JOIN categories ON items.category_id = categories.category_id";
 $result = $conn->query($query);
 $items = $result->fetch_all(MYSQLI_ASSOC);
+$result->free_result();
+
+// Retrieve the list of categories from the categories table
+$query = "SELECT * FROM categories";
+$result = $conn->query($query);
+$categories = $result->fetch_all(MYSQLI_ASSOC);
 $result->free_result();
 ?>
 
@@ -60,22 +61,9 @@ $result->free_result();
     <script src="js/bootstrap.min.js"></script> 
 </head>
 <body>
-    <div class="container">
-        <h1>Welcome, Admin!</h1>
-        <h2>Add Category</h2>
-        <form method="POST">
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label for="category_name">Category Name:</label>
-                        <input type="text" class="form-control" id="category_name" name="category_name" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary" name="add_category">Add Category</button>
-                </div>
-            </div>
-        </form>
 
-        <hr>
+    <div class="container">
+        <h1>Admin Dashboard</h1>
 
         <h2>Add Item</h2>
         <form method="POST">
@@ -100,6 +88,7 @@ $result->free_result();
                     <div class="form-group">
                         <label for="item_category">Category:</label>
                         <select class="form-control" id="item_category" name="item_category" required>
+                            <option value="" selected disabled>Select a category</option>
                             <?php foreach ($categories as $category): ?>
                                 <option value="<?php echo $category['category_id']; ?>"><?php echo $category['name']; ?></option>
                             <?php endforeach; ?>
@@ -133,12 +122,11 @@ $result->free_result();
                         <td><?php echo $item['description']; ?></td>
                         <td><?php echo $item['quantity']; ?></td>
                         <td><?php echo $item['price']; ?></td>
-                        <td><?php echo $item['category_id']; ?></td>
+                        <td><?php echo $item['category_name']; ?></td>
                         <td>
-    <a href="edit.php?item_id=<?php echo $item['item_id']; ?>" class="btn btn-primary">Edit</a>
-    <a href="delete.php?item_id=<?php echo $item['item_id']; ?>" class="btn btn-danger">Delete</a>
-</td>
-
+                            <a href="admin.php?delete_item=<?php echo $item['item_id']; ?>" class="btn btn-danger">Delete</a>
+                            <a href="edit.php?item_id=<?php echo $item['item_id']; ?>" class="btn btn-primary">Edit</a>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
@@ -146,7 +134,11 @@ $result->free_result();
 
         <hr>
 
+        <a href="categories.php" class="btn btn-secondary">Manage Categories</a>
         <a href="logout.php" class="btn btn-secondary">Logout</a>
     </div>
+    <footer>
+        <?php include("footer.php");?>
+    </footer>
 </body>
 </html>
