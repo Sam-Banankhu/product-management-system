@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['user_id'] = $user['user_id'];
         $_SESSION['username'] = $user['username'];
 
-        header('Location: admin.php');
+        header('Location: index.php');
         exit();
     } else {
         $loginError = 'Invalid username or password'; // Display an error message on the login form
