@@ -49,6 +49,17 @@
             border-radius: 5px;
             cursor: pointer;
         }
+        .quantityInput {
+    width: 50px; /* Adjust the width as needed */
+    height: 30px; /* Adjust the height as needed */
+    padding: 5px; /* Add padding around the input */
+    margin-left: 10px; /* Add left margin for spacing */
+    font-size: 16px; /* Adjust the font size */
+    text-align: center; /* Center the text within the input */
+    border: 1px solid #ddd; /* Add a border for better visibility */
+    border-radius: 5px; /* Add rounded corners for a nicer look */
+}
+
     </style>
 </head>
 <body>
