@@ -6,17 +6,28 @@ require_once 'db_connection.php';
 if (isset($_POST['search'])) {
     $searchTerm = $_POST['search'];
 
-    // Query to fetch products that match the search term
+    // Pagination settings
+    $perPage = 10; // Number of items per page
+
+    // Get the current page number from the request, default to page 1 if not provided or invalid
+    $page = isset($_GET['page']) && is_numeric($_GET['page']) && $_GET['page'] > 0 ? $_GET['page'] : 1;
+
+    // Calculate the starting index for the current page
+    $start = ($page - 1) * $perPage;
+
+    // Query to fetch products that match the search term for the current page
     $query = "SELECT items.*, categories.name AS category_name 
               FROM items 
               JOIN categories ON items.category_id = categories.category_id
               WHERE items.name LIKE '%$searchTerm%'
               OR items.description LIKE '%$searchTerm%'
-              OR categories.name LIKE '%$searchTerm%'";
+              OR categories.name LIKE '%$searchTerm%'
+              ORDER BY items.name ASC
+              LIMIT $start, $perPage";
 
     $result = $conn->query($query);
 
-    // Check if there are any products matching the search term
+    // Check if there are any products matching the search term on the current page
     if ($result->num_rows > 0) {
         // Start building the HTML table
         echo "<table id=\"product-table\">";

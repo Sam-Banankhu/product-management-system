@@ -49,25 +49,25 @@
             border-radius: 5px;
             cursor: pointer;
         }
-        .quantityInput {
-    width: 50px; 
-    height: 30px;
-    padding: 5px; 
-    margin-left: 10px; 
-    font-size: 16px; 
-    text-align: center; 
-    border: 1px solid #ddd; 
-    border-radius: 5px; 
-}
 
+        .quantityInput {
+            width: 50px;
+            height: 30px;
+            padding: 5px;
+            margin-left: 10px;
+            font-size: 16px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
     <?php
     // Include the necessary files for database connection, session management, and cart functions
     include("header.php");
-    require_once 'db_connection.php'; 
-    require_once 'session.php'; 
+    require_once 'db_connection.php';
+    require_once 'session.php';
     require_once 'cart_functions.php'; // New cart functions file
     ?>
 
@@ -83,15 +83,19 @@
         </div>
     </div>
 
+    <footer>
+        <?php include("footer.php"); ?>
+    </footer>
+
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             // Load the initial product list on page load
             loadProducts();
 
             // Function to load products asynchronously using AJAX
             function loadProducts() {
                 var xhr = new XMLHttpRequest();
-                xhr.onreadystatechange = function() {
+                xhr.onreadystatechange = function () {
                     if (xhr.readyState === XMLHttpRequest.DONE) {
                         if (xhr.status === 200) {
                             document.getElementById("productList").innerHTML = xhr.responseText;
@@ -106,11 +110,11 @@
             }
 
             // Function to handle the search button click event
-            document.getElementById("searchButton").addEventListener("click", function() {
+            document.getElementById("searchButton").addEventListener("click", function () {
                 var searchTerm = document.getElementById("searchTerm").value;
 
                 var xhr = new XMLHttpRequest();
-                xhr.onreadystatechange = function() {
+                xhr.onreadystatechange = function () {
                     if (xhr.readyState === XMLHttpRequest.DONE) {
                         if (xhr.status === 200) {
                             document.getElementById("productList").innerHTML = xhr.responseText;
@@ -126,7 +130,7 @@
             });
 
             // Function to handle the add to cart button click event
-            document.addEventListener("click", function(event) {
+            document.addEventListener("click", function (event) {
                 if (event.target.classList.contains("addToCartBtn")) {
                     // Check if the user is logged in
                     var loggedIn = <?php echo isset($_SESSION['user_id']) ? 'true' : 'false'; ?>;
@@ -147,7 +151,7 @@
                     }
 
                     var xhr = new XMLHttpRequest();
-                    xhr.onreadystatechange = function() {
+                    xhr.onreadystatechange = function () {
                         if (xhr.readyState === XMLHttpRequest.DONE) {
                             if (xhr.status === 200) {
                                 alert("Item added to cart successfully!");
