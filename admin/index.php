@@ -61,8 +61,6 @@ $active_page = 'dashboard'; // You can set this dynamically based on the current
         <?php endif; ?>
 
     </div>
-    <footer>
-        <?php include("../footer.php"); ?>
-    </footer>
+    
 </body>
 </html>
