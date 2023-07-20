@@ -1,0 +1,16 @@
+
+/* admin_header.css */
+
+/* Reduce the top and bottom padding of the navbar-brand */
+.navbar-brand {
+    padding-top: 5px; /* Adjust the top padding as needed */
+    padding-bottom: 5px; /* Adjust the bottom padding as needed */
+}
+
+/* Lock the navigation bar at the top */
+.admin-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}

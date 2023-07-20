@@ -1,6 +1,6 @@
 <?php
 // Include the necessary files for database connection
-require_once 'db_connection.php'; 
+require_once '../db_connection.php'; 
 
 // Check if the item_id is provided via GET
 if (isset($_GET['item_id'])) {

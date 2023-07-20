@@ -1,0 +1,7 @@
+/* admin_login.css */
+
+/* Reduce the top and bottom padding of the navbar-brand for the login page */
+.admin-nav .navbar-brand {
+    padding-top: 5px; /* Adjust the top padding as needed */
+    padding-bottom: 5px; /* Adjust the bottom padding as needed */
+}

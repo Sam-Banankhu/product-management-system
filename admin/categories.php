@@ -2,7 +2,8 @@
 // Include the necessary files for database connection and session management
 include("admin_header.php");
 require_once '../db_connection.php';
-require_once '../session.php';
+require_once 'session.php';
+require_once 'category_functions.php'; // Include the submodule
 
 // Check if the user is already logged in, redirect to the index if true
 if (!isAdminLoggedIn()) {
@@ -13,31 +14,13 @@ if (!isAdminLoggedIn()) {
 // Handle the category form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_category'])) {
     $category_name = $_POST['category_name'];
-
-    // Insert the new category into the categories table
-    $query = "INSERT INTO categories (name) VALUES (?)";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param('s', $category_name);
-    $stmt->execute();
-    $stmt->close();
+    addCategory($category_name); // Call the function from the submodule to add the category
 }
 
 // Handle the category deletion
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_category'])) {
     $category_id = $_POST['category_id'];
-
-    // Delete the category and related items from the tables
-    $query = "DELETE FROM categories WHERE category_id = ?";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param('i', $category_id);
-    $stmt->execute();
-    $stmt->close();
-
-    $query = "DELETE FROM items WHERE category_id = ?";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param('i', $category_id);
-    $stmt->execute();
-    $stmt->close();
+    deleteCategory($category_id); // Call the function from the submodule to delete the category
 }
 
 // Pagination variables
@@ -67,9 +50,25 @@ $stmt->close();
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Product Management System - Categories</title>
+    <title>Categories</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <script src="../js/jquery-3.6.0.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
+    <script>
+        function confirmDelete(categoryId) {
+            if (confirm("Are you sure you want to delete this category?")) {
+                $.ajax({
+                    type: "POST",
+                    url: "categories.php",
+                    data: { delete_category: 1, category_id: categoryId },
+                    success: function() {
+                        // After successful deletion, remove the deleted category row from the table
+                        $("#category-" + categoryId).remove();
+                    }
+                });
+            }
+        }
+    </script>
 </head>
 <body>
     <div class="container">
@@ -100,14 +99,11 @@ $stmt->close();
             </thead>
             <tbody>
                 <?php foreach ($categories as $category): ?>
-                    <tr>
+                    <tr id="category-<?php echo $category['category_id']; ?>">
                         <!-- <td><?php echo $category['category_id']; ?></td> -->
                         <td><?php echo $category['name']; ?></td>
                         <td>
-                            <form method="POST" class="d-inline-block">
-                                <input type="hidden" name="category_id" value="<?php echo $category['category_id']; ?>">
-                                <button type="submit" class="btn btn-danger" name="delete_category">Delete</button>
-                            </form>
+                            <button type="button" class="btn btn-danger" onclick="confirmDelete(<?php echo $category['category_id']; ?>)">Delete</button>
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -132,8 +128,7 @@ $stmt->close();
 
         <hr>
 
-        <a href="index.php" class="btn btn-secondary">Go Back</a>
+        <a href="categories.php" class="btn btn-secondary">Go Back</a>
     </div>
-   
 </body>
 </html>
