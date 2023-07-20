@@ -1,12 +1,12 @@
 <?php
 // Include the necessary files for database connection and session management
-include("header.php");
-require_once 'db_connection.php';
-require_once 'session.php';
+include("admin_header.php");
+require_once '../db_connection.php';
+require_once '../session.php';
 
 // Check if the user is already logged in, redirect to the index if true
-if (!isLoggedIn()) {
-    header('Location: index.php'); // Redirect to index.php if user is not logged in
+if (!isAdminLoggedIn()) {
+    header('Location: admin_login.php'); // Redirect to index.php if user is not logged in
     exit();
 }
 
@@ -68,8 +68,8 @@ $stmt->close();
 <html>
 <head>
     <title>Product Management System - Categories</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <script src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <script src="../js/bootstrap.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -132,10 +132,8 @@ $stmt->close();
 
         <hr>
 
-        <a href="admin.php" class="btn btn-secondary">Go Back</a>
+        <a href="index.php" class="btn btn-secondary">Go Back</a>
     </div>
-    <footer>
-        <?php include("footer.php");?>
-    </footer>
+   
 </body>
 </html>

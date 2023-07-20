@@ -12,8 +12,8 @@ if (isset($_GET['item_id'])) {
     $stmt->bind_param('i', $item_id);
     $stmt->execute();
 
-    // Redirect back to admin.php after successful item deletion
-    header('Location: admin.php');
+    // Redirect back to index.php after successful item deletion
+    header('Location: index.php');
     exit();
 }
 ?>

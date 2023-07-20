@@ -11,7 +11,7 @@ if (!isLoggedIn()) {
 
 // Check if the item ID is provided in the URL
 if (!isset($_GET['item_id'])) {
-    header('Location: admin.php');
+    header('Location: index.php');
     exit();
 }
 
@@ -26,7 +26,7 @@ $result = $stmt->get_result();
 
 if ($result->num_rows === 0) {
     $stmt->close();
-    header('Location: admin.php');
+    header('Location: index.php');
     exit();
 }
 
@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_item'])) {
     $stmt->execute();
     $stmt->close();
 
-    header('Location: admin.php');
+    header('Location: index.php');
     exit();
 }
 
@@ -101,7 +101,7 @@ $result->free_result();
             </div>
         </form>
         <br>
-        <a href="admin.php" class="btn btn-secondary">Back to Admin Panel</a>
+        <a href="index.php" class="btn btn-secondary">Back to Admin Panel</a>
     </div>
 </body>
 </html>

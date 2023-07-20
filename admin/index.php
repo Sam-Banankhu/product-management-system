@@ -34,7 +34,7 @@ $active_page = 'dashboard'; // You can set this dynamically based on the current
     <div class="container">
         <?php include("admin_header.php"); ?>
 
-        <!-- Rest of the admin.php page content -->
+        <!-- Rest of the index.php page content -->
         <h1>Welcome, <?php echo $_SESSION['admin_username']; ?>!</h1>
         <p>This is the Admin Dashboard. You have <?php echo $admin_role; ?> privileges.</p>
 

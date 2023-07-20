@@ -1,7 +1,7 @@
 <!-- delete_item.php -->
 <?php
 // Include the necessary files for database connection
-require_once 'db_connection.php';
+require_once '../db_connection.php';
 
 // Check if the item ID is provided via POST
 if (isset($_POST['item_id'])) {

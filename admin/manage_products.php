@@ -160,7 +160,7 @@ $result->free_result();
                         <td><?php echo $item['price']; ?></td>
                         <td><?php echo $item['category_name']; ?></td>
                         <td>
-                            <a href="admin.php?delete_item=<?php echo $item['item_id']; ?>" class="btn btn-danger">Delete</a>
+                            <a href="manage_products.php?delete_item=<?php echo $item['item_id']; ?>" class="btn btn-danger">Delete</a>
                             <a href="edit.php?item_id=<?php echo $item['item_id']; ?>" class="btn btn-primary">Edit</a>
                         </td>
                     </tr>
@@ -171,15 +171,15 @@ $result->free_result();
         <nav aria-label="Page navigation">
             <ul class="pagination">
                 <?php if ($current_page > 1): ?>
-                    <li class="page-item"><a class="page-link" href="admin.php?page=<?php echo $current_page - 1; ?>">Previous</a></li>
+                    <li class="page-item"><a class="page-link" href="manage_products.php?page=<?php echo $current_page - 1; ?>">Previous</a></li>
                 <?php endif; ?>
 
                 <?php for ($page = 1; $page <= $total_pages; $page++): ?>
-                    <li class="page-item <?php if ($page == $current_page) echo 'active'; ?>"><a class="page-link" href="admin.php?page=<?php echo $page; ?>"><?php echo $page; ?></a></li>
+                    <li class="page-item <?php if ($page == $current_page) echo 'active'; ?>"><a class="page-link" href="index.php?page=<?php echo $page; ?>"><?php echo $page; ?></a></li>
                 <?php endfor; ?>
 
                 <?php if ($current_page < $total_pages): ?>
-                    <li class="page-item"><a class="page-link" href="admin.php?page=<?php echo $current_page + 1; ?>">Next</a></li>
+                    <li class="page-item"><a class="page-link" href="manage_products.php?page=<?php echo $current_page + 1; ?>">Next</a></li>
                 <?php endif; ?>
             </ul>
         </nav>
@@ -187,10 +187,8 @@ $result->free_result();
         <hr>
 
         <a href="categories.php" class="btn btn-secondary">Manage Categories</a>
-        <a href="logout.php" class="btn btn-secondary">Logout</a>
+        <a href="../logout.php" class="btn btn-secondary">Logout</a>
     </div>
-    <footer>
-        <?php include("../footer.php");?>
-    </footer>
+  
 </body>
 </html>

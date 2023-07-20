@@ -6,7 +6,7 @@ require_once '../session.php';
 
 // Check if the admin is already logged in, redirect to the admin dashboard if true
 if (isAdminLoggedIn()) {
-    header('Location: admin.php');
+    header('Location: index.php');
     exit();
 }
 
