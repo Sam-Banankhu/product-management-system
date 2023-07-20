@@ -1,11 +1,11 @@
 <?php
 // Include the necessary files for database connection and session management
-require_once 'db_connection.php';
+require_once '../db_connection.php';
 require_once 'session.php';
 
 // Check if the user is already logged in, redirect to the index if not
-if (!isLoggedIn()) {
-    header('Location: index.php');
+if (!isAdminLoggedIn()) {
+    header('Location: admin_login.php');
     exit();
 }
 
