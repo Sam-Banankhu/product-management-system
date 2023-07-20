@@ -61,6 +61,12 @@
             margin-bottom: 20px;
         }
 
+        .cart-item-subtotal {
+            font-size: 16px;
+            color: #777;
+            margin-top: 5px;
+        }
+
         .checkout-btn {
             display: block;
             width: 100%;
@@ -78,49 +84,39 @@
 </head>
 <body>
     <?php
-    // Include the necessary files for database connection and session management
     include("header.php");
     require_once 'db_connection.php';
     require_once 'session.php';
-    require_once 'cart_functions.php'; // New cart functions file
+    require_once 'cart_functions.php';
 
-    // Get the user ID from the session
     $userId = $_SESSION['user_id'];
-
-    // Get the cart items for the current user
     $cartItems = getCartItems($userId);
-
-    // Function to calculate the total cost of all items in the cart
-    function calculateTotalCost($items)
-    {
-        $total = 0;
-        foreach ($items as $item) {
-            $total += $item['price'] * $item['quantity'];
-        }
-        return $total;
-    }
-
-    $totalCost = calculateTotalCost($cartItems);
+    $totalCost = 0;
     ?>
 
     <div class="container">
         <h2>Cart Items</h2>
         <div class="cart-items">
             <?php foreach ($cartItems as $item) : ?>
+                <?php
+                $subtotal = $item['price'] * $item['cart_quantity'];
+                $totalCost += $subtotal;
+                ?>
                 <div class="cart-item">
-                    <img src="img/<?php echo $item['image']; ?>" alt="<?php echo $item['name']; ?>">
-                    <div>
+                    <div class="cart-item-info">
                         <div class="cart-item-name"><?php echo $item['name']; ?></div>
-                        <div class="cart-item-price">$<?php echo $item['price']; ?></div>
+                        <div class="cart-item-description"><?php echo $item['description']; ?></div>
+                        <div class="cart-item-price">MWK <?php echo $item['price']; ?></div>
+                        <div class="cart-item-subtotal">Subtotal: MWK <?php echo number_format($subtotal, 2); ?></div>
                     </div>
-                    <input type="number" class="cart-item-quantity" value="<?php echo $item['quantity']; ?>" data-item-id="<?php echo $item['item_id']; ?>">
-                    <button class="cart-item-delete" data-item-id="<?php echo $item['item_id']; ?>" title="Delete item">&times;</button>
+                    <input type="number" class="cart-item-quantity" value="<?php echo $item['cart_quantity']; ?>" data-item-id="<?php echo $item['item_id']; ?>">
+                    <button class="btn btn-danger cart-item-delete" data-item-id="<?php echo $item['item_id']; ?>" title="Delete item">Delete</button>
                 </div>
             <?php endforeach; ?>
         </div>
 
         <div class="cart-total">
-            Total: $<?php echo $totalCost; ?>
+            Total: MWK <?php echo number_format($totalCost, 2); ?>
         </div>
 
         <button class="checkout-btn" onclick="window.location.href='checkout.php'">Proceed to Checkout</button>
@@ -134,7 +130,6 @@
                     var itemID = event.target.getAttribute("data-item-id");
                     var quantity = event.target.value;
 
-                    // Validate the quantity (you can add additional validation if needed)
                     if (!(Number.isInteger(Number(quantity)) && quantity > 0)) {
                         alert("Invalid quantity!");
                         return;
@@ -144,7 +139,6 @@
                     xhr.onreadystatechange = function () {
                         if (xhr.readyState === XMLHttpRequest.DONE) {
                             if (xhr.status === 200) {
-                                // Reload the page after updating the quantity
                                 window.location.reload();
                             } else {
                                 alert("Error updating quantity.");
@@ -158,7 +152,6 @@
                 }
             });
 
-            // Function to handle the delete button click event
             document.addEventListener("click", function (event) {
                 if (event.target.classList.contains("cart-item-delete")) {
                     var itemID = event.target.getAttribute("data-item-id");
@@ -167,7 +160,6 @@
                     xhr.onreadystatechange = function () {
                         if (xhr.readyState === XMLHttpRequest.DONE) {
                             if (xhr.status === 200) {
-                                // Reload the page after deleting the item
                                 window.location.reload();
                             } else {
                                 alert("Error deleting item.");

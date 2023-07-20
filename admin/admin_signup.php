@@ -1,13 +1,12 @@
 <?php
 // Include the necessary files for database connection and session management
-include("header.php");
+include("admin_header.php");
+require_once '../db_connection.php';
+require_once '../session.php';
 
-require_once 'db_connection.php'; 
-require_once 'session.php'; 
-
-// Check if the user is already logged in, redirect to the dashboard if true
-if (isUserLoggedIn()) {
-    header('Location: admin.php'); 
+// Check if the admin is already logged in, redirect to the admin dashboard if true
+if (isAdminLoggedIn()) {
+    header('Location: admin.php');
     exit();
 }
 
@@ -16,6 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
     $confirmPassword = $_POST['confirm_password'];
+    $role = $_POST['role']; // Get the selected role (super admin or regular admin)
 
     // Validate form data
     $errors = array();
@@ -35,19 +35,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = "Passwords do not match.";
     }
 
+    // Check if the role is valid (either 'super admin' or 'regular admin')
+    if ($role !== 'super admin' && $role !== 'regular admin') {
+        $errors[] = "Invalid role selected.";
+    }
+
     // Check if there are no validation errors
     if (empty($errors)) {
         // Hash the password before saving it to the database
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-        // Insert the user data into the users table
-        $query = "INSERT INTO users (username, password, created_at, updated_at) VALUES (?, ?, NOW(), NOW())";
+        // Insert the admin data into the admins table
+        $query = "INSERT INTO admins (username, password, role, created_at, updated_at) VALUES (?, ?, ?, NOW(), NOW())";
         $stmt = $conn->prepare($query);
-        $stmt->bind_param('ss', $username, $hashedPassword);
+        $stmt->bind_param('sss', $username, $hashedPassword, $role);
 
         if ($stmt->execute()) {
-            // Redirect the user to the login page after successful registration
-            header('Location: login.php'); 
+            // Redirect the admin to the login page after successful registration
+            header('Location: admin_login.php');
             exit();
         } else {
             $signupError = 'Error occurred while registering. Please try again later.';
@@ -59,10 +64,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Product Management System - Signup</title>
+    <title>Product Management System - Admin Signup</title>
     <!-- Include necessary CSS and JavaScript files -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <script src="js/bootstrap.min.js"></script> 
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <script src="../js/bootstrap.min.js"></script>
     <style>
         .container {
             max-width: 400px;
@@ -73,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
     <div class="container">
-        <h1>Signup</h1>
+        <h1>Admin Signup</h1>
         <?php if (isset($signupError)): ?>
             <div class="alert alert-danger"><?php echo $signupError; ?></div>
         <?php endif; ?>
@@ -97,17 +102,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label for="confirm_password">Confirm Password:</label>
                 <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
             </div>
+            <div class="form-group">
+                <label for="role">Role:</label>
+                <select class="form-control" id="role" name="role">
+                    <option value="super admin">Super Admin</option>
+                    <option value="regular admin">Regular Admin</option>
+                </select>
+            </div>
             <div class="form-group text-center">
                 <button type="submit" class="btn btn-primary">Signup</button>
             </div>
             <div class="form-group text-center">
-                <a href="login.php" class="btn btn-link">Already have an account? Login</a>
+                <a href="admin_login.php" class="btn btn-link">Already have an account? Login</a>
             </div>
         </form>
     </div>
     <footer>
-  <?php include("footer.php");?>
-</footer>
-
+        <?php include("../footer.php"); ?>
+    </footer>
 </body>
 </html>

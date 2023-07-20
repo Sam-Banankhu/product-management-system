@@ -1,17 +1,19 @@
 <?php
 // Include the necessary files for database connection and session management
-include("header.php");
-require_once 'db_connection.php';
-require_once 'session.php';
+include("admin_header.php");
+require_once '../db_connection.php';
+require_once '../session.php';
 
 // Check if the user is already logged in, redirect to the index if not
-if (!isLoggedIn()) {
-    header('Location: index.php');
+if (!isAdminLoggedIn()) {
+    header('Location: admin_login.php');
     exit();
 }
 
 // Handle the item form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_item'])) {
+    requireAdminLogin();
+
     $item_name = $_POST['item_name'];
     $item_description = $_POST['item_description'];
     $item_quantity = $_POST['item_quantity'];
@@ -33,6 +35,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_item'])) {
 
 // Handle the item deletion
 if (isset($_GET['delete_item'])) {
+    requireAdminLogin();
+
     $item_id = $_GET['delete_item'];
 
     // Delete the item from the items table
@@ -86,8 +90,8 @@ $result->free_result();
 <html>
 <head>
     <title>Product Management System - Admin</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css"> 
-    <script src="js/bootstrap.min.js"></script> 
+    <link rel="stylesheet" href="../css/bootstrap.min.css"> 
+    <script src="../js/bootstrap.min.js"></script> 
 </head>
 <body>
 
@@ -186,7 +190,7 @@ $result->free_result();
         <a href="logout.php" class="btn btn-secondary">Logout</a>
     </div>
     <footer>
-        <?php include("footer.php");?>
+        <?php include("../footer.php");?>
     </footer>
 </body>
 </html>

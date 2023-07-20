@@ -3,7 +3,7 @@
 require_once 'session.php';
 
 // Check if the user is logged in
-$isLoggedIn = isLoggedIn();
+$isLoggedIn = isUserLoggedIn();
 
 // Handle logout action
 if (isset($_GET['logout'])) {
