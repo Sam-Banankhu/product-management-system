@@ -34,7 +34,7 @@
                 <?php endforeach; ?>
             </div>
         <?php endif; ?>
-        <form method="POST">
+        <form method="POST" action="admin_signup_process.php">
             <div class="form-group">
                 <label for="username">Username:</label>
                 <input type="text" class="form-control" id="username" name="username" required>
