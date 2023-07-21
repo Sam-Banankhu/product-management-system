@@ -9,7 +9,6 @@
     require_once 'admin_header.php';
     require_once '../db_connection.php';
 
-    // Check if the user is logged in and has admin privileges
     if (!isAdminLoggedIn()) {
         header('Location: admin_login.php');
         exit();
