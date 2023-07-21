@@ -47,8 +47,22 @@
             $user = $result->fetch_assoc();
             $stmt->close();
 
-            // Fetch the cart items for the order from the cart table
-            $cartItems = getCartItems($userID);
+            // Fetch the order items for the order from the order_items table
+            $query = "SELECT items.name, order_items.quantity, order_items.item_price 
+                      FROM order_items 
+                      INNER JOIN items ON order_items.item_id = items.item_id 
+                      WHERE order_id = ?";
+            $stmt = $conn->prepare($query);
+            $stmt->bind_param("s", $orderID);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $orderItems = array();
+
+            while ($row = $result->fetch_assoc()) {
+                $orderItems[] = $row;
+            }
+
+            $stmt->close();
         } else {
             echo "Order not found.";
             exit();
@@ -69,10 +83,11 @@
             </div>
 
             <div class="receipt-items">
-                <?php foreach ($cartItems as $item) : ?>
+                <?php foreach ($orderItems as $item) : ?>
                     <div class="receipt-item">
                         <div class="receipt-item-name"><?php echo $item['name']; ?></div>
-                        <div class="receipt-item-quantity">Quantity: <?php echo $item['cart_quantity']; ?></div>
+                        <div class="receipt-item-quantity">Quantity: <?php echo $item['quantity']; ?></div>
+                        <div class="receipt-item-price">Price: MWK <?php echo number_format($item['item_price'], 2); ?></div>
                     </div>
                 <?php endforeach; ?>
             </div>

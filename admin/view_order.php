@@ -1,9 +1,9 @@
-<!-- view_order_status.php -->
+<!-- pms/admin/view_order.php -->
 <!DOCTYPE html>
 <html>
 <head>
-    <title>View Order Status</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <title>View Order</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
     <style>
         /* Your custom styles here */
 
@@ -67,13 +67,13 @@
     <?php
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
-    include("header.php");
-    require_once 'db_connection.php';
+    // include("admin_header.php");
+    require_once '../db_connection.php';
     require_once 'session.php';
 
-    // Check if the customer is logged in
-    if (!isUserLoggedIn()) {
-        header('Location: login.php');
+    // Check if the admin is logged in
+    if (!isAdminLoggedIn()) {
+        header('Location: admin_login.php');
         exit();
     }
 
@@ -82,7 +82,8 @@
         $orderId = $_GET['order_id'];
 
         // Fetch the order details from the orders table
-        $query = "SELECT status FROM orders WHERE order_id = ?";
+        $query = "SELECT users.username, orders.status, orders.created_at FROM orders 
+                  JOIN users ON orders.user_id = users.user_id WHERE order_id = ?";
         $stmt = $conn->prepare($query);
         $stmt->bind_param("s", $orderId);
         $stmt->execute();
@@ -111,10 +112,12 @@
             // Calculate the subtotal and total for the order
             $subtotal = 0;
             echo '<div class="container">';
-            echo '<div class="header">Order Status</div>';
+            echo '<div class="header">View Order</div>';
             echo '<div class="order-details">';
             echo '<p><strong>Order ID:</strong> ' . $orderId . '</p>';
+            echo '<p><strong>Customer Name:</strong> ' . $order['username'] . '</p>';
             echo '<p><strong>Status:</strong> ' . $order['status'] . '</p>';
+            echo '<p><strong>Order Date:</strong> ' . $order['created_at'] . '</p>';
             echo '</div>';
 
             echo '<div class="order-items">';
@@ -130,10 +133,11 @@
             }
             echo '</div>';
 
+            // Display the total
             echo '<div class="total">Total: MWK ' . number_format($subtotal, 2) . '</div>';
 
-            // Add a link back to the customer's order history page
-            echo '<a class="back-link" href="order_history.php">Back to Order History</a>';
+            // Add a link back to the admin's order history page
+            echo '<a class="back-link" href="manage_orders.php">Back to Order History</a>';
             echo '</div>';
         } else {
             echo "Order not found.";

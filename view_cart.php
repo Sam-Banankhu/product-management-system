@@ -119,10 +119,34 @@
             Total: MWK <?php echo number_format($totalCost, 2); ?>
         </div>
 
-        <button class="checkout-btn" onclick="window.location.href='checkout.php'">Proceed to Checkout</button>
+        <div class="checkout-form">
+            <input type="checkbox" id="checkout-checkbox">
+            <label for="checkout-checkbox">I have reviewed my cart and wish to proceed to checkout.</label>
+            <button class="checkout-btn" id="checkout-btn" disabled>Proceed to Checkout</button>
+        </div>
     </div>
 
     <script>
+
+document.addEventListener("DOMContentLoaded", function () {
+            // Function to handle the checkbox change event
+            var checkoutCheckbox = document.getElementById("checkout-checkbox");
+            var checkoutBtn = document.getElementById("checkout-btn");
+
+            checkoutCheckbox.addEventListener("change", function () {
+                checkoutBtn.disabled = !checkoutCheckbox.checked;
+            });
+
+            // Function to handle the checkout button click event
+            checkoutBtn.addEventListener("click", function () {
+                // Check if the checkbox is checked
+                if (checkoutCheckbox.checked) {
+                    // Redirect to the checkout page
+                    window.location.href = "checkout.php";
+                }
+            });
+        });
+        
         document.addEventListener("DOMContentLoaded", function () {
             // Function to handle the quantity input change event
             document.addEventListener("change", function (event) {
