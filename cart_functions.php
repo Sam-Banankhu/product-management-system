@@ -1,6 +1,5 @@
-<!-- cart_functions.php -->
 <?php
-
+require_once 'db_connection.php';
 
 // Function to add an item to the cart for a user
 function addItemToCart($userID, $itemID, $quantity) {
@@ -65,5 +64,20 @@ function calculateTotalCost($userID) {
     $totalCost = $row['total_cost'];
     $stmt->close();
     return $totalCost;
+}
+
+function clearCart($userId)
+{
+    global $conn;
+    
+    $query = "DELETE FROM cart WHERE user_id = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param('i', $userId);
+    
+    if ($stmt->execute()) {
+        return true;
+    } else {
+        return false;
+    }
 }
 ?>

@@ -153,14 +153,23 @@
             });
 
             document.addEventListener("click", function (event) {
-                if (event.target.classList.contains("cart-item-delete")) {
-                    var itemID = event.target.getAttribute("data-item-id");
+            if (event.target.classList.contains("cart-item-delete")) {
+                var itemID = event.target.getAttribute("data-item-id");
 
+                // Show confirmation dialog
+                if (confirm("Are you sure you want to delete this item?")) {
                     var xhr = new XMLHttpRequest();
                     xhr.onreadystatechange = function () {
                         if (xhr.readyState === XMLHttpRequest.DONE) {
                             if (xhr.status === 200) {
-                                window.location.reload();
+                                // Parse the JSON response
+                                var response = JSON.parse(xhr.responseText);
+                                if (response.status === "success") {
+                                    alert(response.message);
+                                    window.location.reload();
+                                } else {
+                                    alert(response.message);
+                                }
                             } else {
                                 alert("Error deleting item.");
                             }
@@ -171,8 +180,9 @@
                     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                     xhr.send("item_id=" + itemID);
                 }
-            });
+            }
         });
-    </script>
+    });
+</script>
 </body>
 </html>
