@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/admin_header.css">
     <style>
-body {
+        body {
             padding-top: 70px;
         }
 

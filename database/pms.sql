@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 21, 2023 at 01:15 PM
+-- Generation Time: Jul 21, 2023 at 02:08 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -116,16 +116,6 @@ CREATE TABLE `orders` (
   `status` varchar(50) NOT NULL DEFAULT 'pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `orders`
---
-
-INSERT INTO `orders` (`order_id`, `user_id`, `total_cost`, `created_at`, `status`) VALUES
-('ORDER1689930966', 6, '500000.00', '2023-07-21 11:16:06', 'shipped'),
-('ORDER1689931350', 6, '900350.00', '2023-07-21 11:22:30', 'delivered'),
-('ORDER1689937590', 7, '4500000.00', '2023-07-21 13:06:30', 'shipped'),
-('ORDER1689937673', 7, '22410.00', '2023-07-21 13:07:53', 'delivered');
-
 -- --------------------------------------------------------
 
 --
@@ -138,15 +128,6 @@ CREATE TABLE `order_items` (
   `quantity` int(11) NOT NULL,
   `item_price` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `order_items`
---
-
-INSERT INTO `order_items` (`item_id`, `order_id`, `quantity`, `item_price`) VALUES
-(23, 'ORDER1689930966', 1, '500000.00'),
-(23, 'ORDER1689937590', 3, '500000.00'),
-(26, 'ORDER1689937590', 2, '1500000.00');
 
 -- --------------------------------------------------------
 
@@ -167,7 +148,6 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `username`, `password`, `created_at`, `updated_at`) VALUES
-(6, 'micoh', '$2y$10$.h7OfKsacGo2wq7h.CX7lOxDdniuEKqiDc466HQMBq5TzitmsgFcy', '2023-07-21 08:54:20', '2023-07-21 08:54:20'),
 (7, 'brenda', '$2y$10$uQUtXU7K3VRmKe86d49FseI1nrgQ5UNLcPgfhA3qgxxLfnkpbSqZC', '2023-07-21 11:05:02', '2023-07-21 11:05:02');
 
 --
@@ -235,7 +215,7 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT for table `categories`
