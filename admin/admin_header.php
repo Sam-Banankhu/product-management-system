@@ -26,7 +26,7 @@
                 <li class="nav-item <?php if ($active_page === 'products') echo 'active'; ?>">
                     <a class="nav-link" href="manage_products.php">Manage Products</a>
                 </li>
-                <?php if ($admin_role === 'super admin'): ?>
+                <?php if (isset($admin_role) && $admin_role === 'super admin'): ?>
                     <li class="nav-item <?php if ($active_page === 'admins') echo 'active'; ?>">
                         <a class="nav-link" href="manage_admins.php">Manage Admins</a>
                     </li>
@@ -38,5 +38,3 @@
         </div>
     </div>
 </nav>
-
-<div class="container">

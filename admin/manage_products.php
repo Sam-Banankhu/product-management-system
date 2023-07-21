@@ -1,4 +1,6 @@
 <?php
+     error_reporting(E_ALL);
+     ini_set('display_errors', 1);
 // Include the necessary files for database connection and session management
 include("admin_header.php");
 require_once '../db_connection.php';
@@ -39,13 +41,33 @@ if (isset($_GET['delete_item'])) {
 
     $item_id = $_GET['delete_item'];
 
-    // Delete the item from the items table
+    // Check if there are any orders containing this item
+    $query = "SELECT COUNT(*) AS order_count FROM order_items WHERE item_id = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param('i', $item_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    $order_count = $row['order_count'];
+    $stmt->close();
+
+    if ($order_count > 0) {
+        // If there are orders containing this item, delete the corresponding rows from order_items first
+        $query = "DELETE FROM order_items WHERE item_id = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param('i', $item_id);
+        $stmt->execute();
+        $stmt->close();
+    }
+
+    // Now delete the item from the items table
     $query = "DELETE FROM items WHERE item_id = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param('i', $item_id);
     $stmt->execute();
     $stmt->close();
 }
+
 
 // Retrieve the total number of items
 $query = "SELECT COUNT(*) AS total_items FROM items";
