@@ -128,7 +128,7 @@ $stmt->close();
 
         <hr>
 
-        <a href="categories.php" class="btn btn-secondary">Go Back</a>
+        <a href="manage_products.php" class="btn btn-secondary">Go Back</a>
     </div>
 </body>
 </html>
