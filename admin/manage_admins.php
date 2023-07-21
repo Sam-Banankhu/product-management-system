@@ -1,4 +1,3 @@
-<!-- manage_admins.php -->
 <!DOCTYPE html>
 <html>
 <head>
