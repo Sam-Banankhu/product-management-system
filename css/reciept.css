@@ -1,0 +1,51 @@
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+.receipt {
+    margin-top: 50px;
+    border: 1px solid #ddd;
+    padding: 20px;
+}
+
+.receipt-heading {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.receipt-details {
+    margin-bottom: 20px;
+}
+
+.receipt-details p {
+    margin: 0;
+}
+
+.receipt-item {
+    margin-bottom: 10px;
+}
+
+.receipt-item-name {
+    font-size: 18px;
+}
+
+.receipt-item-quantity {
+    font-size: 16px;
+    color: #777;
+    margin-top: 5px;
+}
+
+.receipt-total {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: right;
+    margin-bottom: 20px;
+}
+
+.thank-you-message {
+    font-size: 16px;
+    text-align: center;
+    margin-top: 30px;
+}

@@ -37,6 +37,7 @@ if (isset($_GET['logout'])) {
                 <a class="nav-link" href="about.php">About</a>
                 <?php if ($isLoggedIn) { ?>
                     <a class="nav-link admin-link" href="view_cart.php">View Cart</a>
+                    <a class="nav-link" href="order_history.php">Order History</a> <!-- New link for Order History -->
                     <a class="nav-link" href="?logout">Logout</a>
                 <?php } else { ?>
                     <a class="nav-link" href="login.php">Login</a>

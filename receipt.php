@@ -3,62 +3,8 @@
 <head>
     <title>Order Receipt</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <style>
-        /* Your custom styles here */
-
-        .container {
-            max-width: 960px;
-            margin: 0 auto;
-        }
-
-        .receipt {
-            margin-top: 50px;
-            border: 1px solid #ddd;
-            padding: 20px;
-        }
-
-        .receipt-heading {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-
-        .receipt-details {
-            margin-bottom: 20px;
-        }
-
-        .receipt-details p {
-            margin: 0;
-        }
-
-        .receipt-item {
-            margin-bottom: 10px;
-        }
-
-        .receipt-item-name {
-            font-size: 18px;
-        }
-
-        .receipt-item-quantity {
-            font-size: 16px;
-            color: #777;
-            margin-top: 5px;
-        }
-
-        .receipt-total {
-            font-size: 20px;
-            font-weight: bold;
-            text-align: right;
-            margin-bottom: 20px;
-        }
-
-        .thank-you-message {
-            font-size: 16px;
-            text-align: center;
-            margin-top: 30px;
-        }
-    </style>
-    <!-- Include the jsPDF and html2canvas libraries -->
+    <link rel="stylesheet" href="css/reciept.css">
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 </head>
@@ -66,6 +12,7 @@
     <?php
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
+    include("header.php");
     require_once 'db_connection.php';
     require_once 'session.php';
     require_once 'cart_functions.php';
@@ -143,12 +90,9 @@
     <!-- JavaScript code to handle saving the receipt as an image -->
     <script>
         document.getElementById("saveButton").addEventListener("click", function () {
-            // Capture the receipt container as an image using html2canvas
             html2canvas(document.querySelector(".receipt")).then(function (canvas) {
-                // Convert the canvas image to a data URL
                 var dataURL = canvas.toDataURL("image/png");
 
-                // Create a link element to download the image
                 var link = document.createElement("a");
                 link.download = "order_receipt.png";
                 link.href = dataURL;
