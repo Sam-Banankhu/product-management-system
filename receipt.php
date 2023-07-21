@@ -51,7 +51,16 @@
             text-align: right;
             margin-bottom: 20px;
         }
+
+        .thank-you-message {
+            font-size: 16px;
+            text-align: center;
+            margin-top: 30px;
+        }
     </style>
+    <!-- Include the jsPDF and html2canvas libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 </head>
 <body>
     <?php
@@ -125,6 +134,27 @@
                 Total: MWK <?php echo number_format($order['total_cost'], 2); ?>
             </div>
         </div>
+
+        <!-- Button to save the receipt as an image -->
+        <button id="saveButton" class="btn btn-primary">Save Receipt (Image)</button>
+        <div class="thank-you-message">Thank you for your order. We appreciate your business.</div>
     </div>
+
+    <!-- JavaScript code to handle saving the receipt as an image -->
+    <script>
+        document.getElementById("saveButton").addEventListener("click", function () {
+            // Capture the receipt container as an image using html2canvas
+            html2canvas(document.querySelector(".receipt")).then(function (canvas) {
+                // Convert the canvas image to a data URL
+                var dataURL = canvas.toDataURL("image/png");
+
+                // Create a link element to download the image
+                var link = document.createElement("a");
+                link.download = "order_receipt.png";
+                link.href = dataURL;
+                link.click();
+            });
+        });
+    </script>
 </body>
 </html>

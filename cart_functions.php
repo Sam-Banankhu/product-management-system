@@ -1,8 +1,7 @@
 <?php
-require_once 'db_connection.php';
-
 // Function to add an item to the cart for a user
-function addItemToCart($userID, $itemID, $quantity) {
+function addItemToCart($userID, $itemID, $quantity)
+{
     global $conn;
 
     $query = "INSERT INTO cart (user_id, item_id, quantity) VALUES (?, ?, ?)";
@@ -14,7 +13,8 @@ function addItemToCart($userID, $itemID, $quantity) {
 }
 
 // Function to update the quantity of an item in the cart for a user
-function updateCartItemQuantity($userID, $itemID, $quantity) {
+function updateCartItemQuantity($userID, $itemID, $quantity)
+{
     global $conn;
 
     $query = "UPDATE cart SET quantity = ? WHERE user_id = ? AND item_id = ?";
@@ -49,7 +49,8 @@ function getCartItems($userID)
 }
 
 // Function to calculate the total cost of items in the cart for a user
-function calculateTotalCost($userID) {
+function calculateTotalCost($userID)
+{
     global $conn;
 
     $query = "SELECT SUM(cart.quantity * items.price) AS total_cost 
@@ -69,11 +70,11 @@ function calculateTotalCost($userID) {
 function clearCart($userId)
 {
     global $conn;
-    
+
     $query = "DELETE FROM cart WHERE user_id = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param('i', $userId);
-    
+
     if ($stmt->execute()) {
         return true;
     } else {
