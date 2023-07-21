@@ -13,7 +13,7 @@ if (isset($_GET['item_id'])) {
     $stmt->execute();
 
     // Redirect back to index.php after successful item deletion
-    header('Location: index.php');
+    header('Location: manage_products.php');
     exit();
 }
 ?>

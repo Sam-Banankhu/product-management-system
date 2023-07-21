@@ -61,15 +61,12 @@ $statistics = getStatistics($conn);
 <head>
     <title>Product Management System - Admin Dashboard</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <style>
-        /* ... CSS Styles ... */
-    </style>
+    
 </head>
 <body>
     <div class="container">
         <?php include("admin_header.php"); ?>
 
-        <!-- Rest of the index.php page content -->
         <h1>Welcome, <?php echo $_SESSION['admin_username']; ?>!</h1>
         <p>This is the Admin Dashboard. You have <?php echo $admin_role; ?> privileges.</p>
 

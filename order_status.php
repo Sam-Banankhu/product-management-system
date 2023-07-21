@@ -1,67 +1,9 @@
-<!-- view_order_status.php -->
 <!DOCTYPE html>
 <html>
 <head>
     <title>View Order Status</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <style>
-        /* Your custom styles here */
-
-        .container {
-            max-width: 960px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .header {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-
-        .order-details {
-            margin-bottom: 20px;
-        }
-
-        .order-details p {
-            margin: 0;
-        }
-
-        .order-items {
-            margin-bottom: 20px;
-        }
-
-        .order-item-card {
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 10px;
-            margin-bottom: 10px;
-        }
-
-        .order-item-card p {
-            margin: 0;
-        }
-
-        .subtotal {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .total {
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-
-        .back-link {
-            display: inline-block;
-            margin-top: 20px;
-            font-size: 16px;
-            color: #007bff;
-            cursor: pointer;
-        }
-    </style>
+    <link rel="stylesheet" href="css/order_status.css">
 </head>
 <body>
     <?php

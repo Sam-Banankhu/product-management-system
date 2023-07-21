@@ -1,4 +1,3 @@
-<!-- update_cart.php -->
 <?php
 // Include the necessary files for database connection
 require_once 'db_connection.php';

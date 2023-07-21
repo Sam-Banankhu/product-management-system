@@ -30,7 +30,7 @@ if ($result->num_rows > 0) {
     echo "<th onclick=\"sortTable(1)\">Description</th>";
     echo "<th onclick=\"sortTable(2)\">Quantity</th>";
     echo "<th onclick=\"sortTable(3)\">Price</th>";
-    echo "<th>Action</th>"; // Add a new column for the "Add to Cart" button
+    echo "<th>Action</th>"; 
     echo "</tr>";
 
     while ($row = $result->fetch_assoc()) {

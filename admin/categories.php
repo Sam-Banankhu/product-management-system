@@ -7,7 +7,7 @@ require_once 'category_functions.php'; // Include the submodule
 
 // Check if the user is already logged in, redirect to the index if true
 if (!isAdminLoggedIn()) {
-    header('Location: admin_login.php'); // Redirect to index.php if user is not logged in
+    header('Location: admin_login.php'); // Redirect to admin login if user is not logged in
     exit();
 }
 

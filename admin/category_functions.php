@@ -12,12 +12,6 @@ function addCategory($categoryName)
     return $result;
 }
 
-/**
- * Function to delete a category from the database along with its related items.
- *
- * @param int $categoryId The ID of the category to be deleted.
- * @return bool True if the category was deleted successfully, false otherwise.
- */
 function deleteCategory($categoryId)
 {
     global $conn;

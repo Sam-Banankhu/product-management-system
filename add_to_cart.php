@@ -1,12 +1,9 @@
 <?php
-// add_to_cart.php
-
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Check if the user is logged in
     session_start();
     if (!isset($_SESSION['user_id'])) {
-        // If not logged in, return an error response
-        http_response_code(401); // Unauthorized status code
+        http_response_code(401); 
         echo json_encode(["message" => "User not logged in"]);
         exit();
     }
@@ -17,13 +14,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // Validate the input
     if (!(is_numeric($itemID) && is_numeric($quantity) && $quantity > 0)) {
-        // If input is not valid, return an error response
         http_response_code(400); // Bad request status code
         echo json_encode(["message" => "Invalid input"]);
         exit();
     }
 
-    // Database connection and query logic
+    // Database connection
     require_once 'db_connection.php';
 
     // Prepare and execute the SQL query to add the item to cart

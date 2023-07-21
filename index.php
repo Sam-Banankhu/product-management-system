@@ -4,63 +4,7 @@
     <title>Product List</title>
     <link rel="stylesheet" href="css/dashboard.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <style>
-        /* Your custom styles here */
-        .container {
-            max-width: 960px;
-            margin: 0 auto;
-        }
-
-        .search-form {
-            margin-bottom: 20px;
-        }
-
-        .table-wrapper {
-            border: 1px solid #ddd;
-            padding: 20px;
-        }
-
-        .product-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .product-item {
-            border-bottom: 1px solid #ddd;
-            padding: 10px;
-        }
-
-        .product-name {
-            font-size: 18px;
-        }
-
-        .product-price {
-            font-size: 16px;
-            color: #999;
-        }
-
-        .addToCartBtn {
-            width: 100px;
-            height: 30px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .quantityInput {
-            width: 50px;
-            height: 30px;
-            padding: 5px;
-            margin-left: 10px;
-            font-size: 16px;
-            text-align: center;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-    </style>
+    <link rel="stylesheet" href="css/customer_index.css">
 </head>
 <body>
     <?php

@@ -122,7 +122,6 @@ body {
 
     // Handle form submissions and update customer information
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Check if the form submission is for enabling/disabling or deleting a customer account
         if (isset($_POST['action']) && isset($_POST['user_id'])) {
             $customerId = intval($_POST['user_id']);
             $action = $_POST['action'];

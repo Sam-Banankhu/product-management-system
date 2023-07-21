@@ -3,21 +3,7 @@
 <head>
     <title>About - LogicLab Inc.</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <style>
-        .container {
-            margin-top: 50px;
-        }
-        .team-members {
-            list-style: none;
-            padding-left: 0;
-        }
-        .team-member {
-            margin-bottom: 20px;
-            padding: 10px;
-            background-color: #f9f9f9;
-            border-radius: 5px;
-        }
-    </style>
+    <link rel="stylesheet" href="css/about.css">>
 </head>
 <body>
     <?php include("header.php"); ?>

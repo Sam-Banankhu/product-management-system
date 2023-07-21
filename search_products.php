@@ -2,20 +2,14 @@
 // Include the necessary files for database connection
 require_once 'db_connection.php';
 
-// Check if the search term is received via POST
 if (isset($_POST['search'])) {
     $searchTerm = $_POST['search'];
-
-    // Pagination settings
     $perPage = 10; // Number of items per page
-
-    // Get the current page number from the request, default to page 1 if not provided or invalid
     $page = isset($_GET['page']) && is_numeric($_GET['page']) && $_GET['page'] > 0 ? $_GET['page'] : 1;
 
     // Calculate the starting index for the current page
     $start = ($page - 1) * $perPage;
 
-    // Query to fetch products that match the search term for the current page
     $query = "SELECT items.*, categories.name AS category_name 
               FROM items 
               JOIN categories ON items.category_id = categories.category_id

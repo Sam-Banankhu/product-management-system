@@ -4,47 +4,7 @@
 <head>
     <title>Order History</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <style>
-        /* Your custom styles here */
-
-        .container {
-            max-width: 960px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .header {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-
-        .order-list {
-            margin-bottom: 20px;
-        }
-
-        .order-item {
-            margin-bottom: 10px;
-        }
-
-        .order-id {
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        .order-status {
-            font-size: 16px;
-            color: #777;
-            margin-top: 5px;
-        }
-
-        .order-details-link {
-            display: inline-block;
-            font-size: 16px;
-            color: #007bff;
-            cursor: pointer;
-        }
-    </style>
+    <link rel="stylesheet" href="css/order_history.css">
 </head>
 <body>
     <?php

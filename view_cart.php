@@ -1,86 +1,10 @@
-<!-- view_cart.php -->
 <!DOCTYPE html>
 <html>
 <head>
     <title>View Cart</title>
     <link rel="stylesheet" href="css/dashboard.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <style>
-        /* Your custom styles here */
-
-        .container {
-            max-width: 960px;
-            margin: 0 auto;
-        }
-
-        .cart-items {
-            margin-bottom: 20px;
-        }
-
-        .cart-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .cart-item img {
-            width: 50px;
-            height: 50px;
-            margin-right: 10px;
-        }
-
-        .cart-item-name {
-            font-size: 18px;
-        }
-
-        .cart-item-price {
-            font-size: 16px;
-            color: #999;
-        }
-
-        .cart-item-quantity {
-            margin-left: auto;
-            width: 50px;
-            height: 30px;
-            padding: 5px;
-            font-size: 16px;
-            text-align: center;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-
-        .cart-item-delete {
-            margin-left: 10px;
-            cursor: pointer;
-        }
-
-        .cart-total {
-            font-size: 20px;
-            font-weight: bold;
-            text-align: right;
-            margin-bottom: 20px;
-        }
-
-        .cart-item-subtotal {
-            font-size: 16px;
-            color: #777;
-            margin-top: 5px;
-        }
-
-        .checkout-btn {
-            display: block;
-            width: 100%;
-            max-width: 200px;
-            margin: 0 auto;
-            text-align: center;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 10px;
-            cursor: pointer;
-        }
-    </style>
+    <link rel="stylesheet" href="css/view_cart.css">
 </head>
 <body>
     <?php
@@ -126,87 +50,6 @@
         </div>
     </div>
 
-    <script>
-
-document.addEventListener("DOMContentLoaded", function () {
-            // Function to handle the checkbox change event
-            var checkoutCheckbox = document.getElementById("checkout-checkbox");
-            var checkoutBtn = document.getElementById("checkout-btn");
-
-            checkoutCheckbox.addEventListener("change", function () {
-                checkoutBtn.disabled = !checkoutCheckbox.checked;
-            });
-
-            // Function to handle the checkout button click event
-            checkoutBtn.addEventListener("click", function () {
-                // Check if the checkbox is checked
-                if (checkoutCheckbox.checked) {
-                    // Redirect to the checkout page
-                    window.location.href = "checkout.php";
-                }
-            });
-        });
-        
-        document.addEventListener("DOMContentLoaded", function () {
-            // Function to handle the quantity input change event
-            document.addEventListener("change", function (event) {
-                if (event.target.classList.contains("cart-item-quantity")) {
-                    var itemID = event.target.getAttribute("data-item-id");
-                    var quantity = event.target.value;
-
-                    if (!(Number.isInteger(Number(quantity)) && quantity > 0)) {
-                        alert("Invalid quantity!");
-                        return;
-                    }
-
-                    var xhr = new XMLHttpRequest();
-                    xhr.onreadystatechange = function () {
-                        if (xhr.readyState === XMLHttpRequest.DONE) {
-                            if (xhr.status === 200) {
-                                window.location.reload();
-                            } else {
-                                alert("Error updating quantity.");
-                            }
-                        }
-                    };
-
-                    xhr.open("POST", "update_cart.php", true);
-                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                    xhr.send("item_id=" + itemID + "&quantity=" + quantity);
-                }
-            });
-
-            document.addEventListener("click", function (event) {
-            if (event.target.classList.contains("cart-item-delete")) {
-                var itemID = event.target.getAttribute("data-item-id");
-
-                // Show confirmation dialog
-                if (confirm("Are you sure you want to delete this item?")) {
-                    var xhr = new XMLHttpRequest();
-                    xhr.onreadystatechange = function () {
-                        if (xhr.readyState === XMLHttpRequest.DONE) {
-                            if (xhr.status === 200) {
-                                // Parse the JSON response
-                                var response = JSON.parse(xhr.responseText);
-                                if (response.status === "success") {
-                                    alert(response.message);
-                                    window.location.reload();
-                                } else {
-                                    alert(response.message);
-                                }
-                            } else {
-                                alert("Error deleting item.");
-                            }
-                        }
-                    };
-
-                    xhr.open("POST", "delete_item.php", true);
-                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                    xhr.send("item_id=" + itemID);
-                }
-            }
-        });
-    });
-</script>
+    <script src="js/view_cart.js"></script>
 </body>
 </html>
